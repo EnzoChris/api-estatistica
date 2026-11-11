@@ -13,6 +13,16 @@ uvicorn app.main:app --reload
 
 A documentação interativa fica em http://127.0.0.1:8000/docs. Para executar os testes: `python -m pytest`.
 
+Para executar localmente as mesmas verificações de qualidade e cobertura da CI:
+
+```bash
+ruff check .
+ruff format --check .
+python -m pytest --cov=app --cov-report=term-missing --cov-fail-under=80
+```
+
+Os testes incluem chamadas HTTP à aplicação usando o cliente de testes do FastAPI. A cobertura mínima exigida é de 80% das linhas da aplicação.
+
 Também é possível executar com Docker:
 
 ```bash

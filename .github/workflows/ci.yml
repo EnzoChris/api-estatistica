@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  qualidade:
+    name: Lint e formatação
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Instalar dependências de desenvolvimento
+        run: python -m pip install '.[dev]'
+      - name: Verificar lint
+        run: ruff check .
+      - name: Verificar formatação
+        run: ruff format --check .
+
+  testes:
+    name: Testes e cobertura
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Instalar projeto e ferramentas de teste
+        run: python -m pip install '.[dev]'
+      - name: Executar testes e exigir 80% de cobertura
+        run: python -m pytest --cov=app --cov-report=term-missing --cov-fail-under=80
+
+  docker:
+    name: Build da imagem Docker
+    needs: [qualidade, testes]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+      - name: Construir imagem
+        run: docker build -t api-estatistica:ci .

@@ -1,0 +1,43 @@
+ACOMPANHAMENTO DE USO DE IA
+
+Interação 1 — Avaliação inicial
+Prompt: "eu preciso realizar esse desafio aqui e preciso da sua ajuda para a implementação, basicamente vamos dividir em duas partes: a parte de ci e depois a parte de cd. eu quero que você utilize esse projeto o qual você está inserido para apenas implementar a pipeline e ir me falando tudo, com a minha confirmação.
+
+Primeiramente avalie todo o projeto e me confirme se é coerente usarmos etapas da esteira como lint, ruff para formatação e também cobertura de testes unitários e testes de integração, assim como esse repositorio: https://github.com/QuiStock/AI_Multi-Agent
+Essa é a minha proposta para ci, não realize nenhuma alteração no projeto por enquanto.
+
+Também precisamos registrar o uso de IA dentro do projeto, então vamos dividir isso: o que eu falar para você que eu devo fazer, você apenas me oriente, as outras partes você faz e deixa tudo isso registro em um arquivo .txt chamado acompanhamento de uso de IA. Eu quero que você reconheça as dificuldades que poderemos enfrentar durante o projeto, seja na sua parte quando você 'travar' em algo, ou na minha quando eu te falar. - Deixe tudo isso no arquivo de uma forma simples e sem se estender muito"
+Resultado: requisitos e projeto avaliados; 12 testes existentes passaram localmente.
+Dificuldade: a IA não conseguiu inspecionar os arquivos do workflow do repositório de referência; consultou o README e o pyproject.toml. Não havia testes HTTP identificados.
+Alteração: nenhuma, conforme solicitado.
+
+Interação 2 — Criação inicial da CI
+Prompt: "vamos lá, onde eu trabalho temos uma cobertura de 80%, então eu quero que seja esse o percentual de cobertura.
+Sobre os outros pontos, incluindo o build da imagem no docker, eu concordo. Podemos começar a implementação do arquivo dentro de .github/workflows. Após isso vamos verificar e ajustar o código para passar nos requisitos, mas apenas quando eu pedir"
+Resultado: proposta de workflow com Ruff, testes, cobertura mínima de 80% e build Docker, para push e pull request na main.
+Dificuldade: a cobertura e a conformidade do código com Ruff ainda precisam ser verificadas; o projeto não declara Ruff ou pytest-cov nas dependências.
+Alteração: criado .github/workflows/ci.yml; ferramentas instaladas diretamente no workflow. Os ajustes no código aguardam solicitação.
+
+Interação 3 — Testes e Docker
+Prompt: "agora precisamos aplicar os testes necessários para passar e também configurar o docker, certo? Isso já está feito dentro do projeto? se não, pode implementar também"
+Resultado: 18 testes passaram; cobertura de linhas da aplicação em 100%. Ruff aprovou lint e formatação. O Dockerfile e a etapa de build já existiam.
+Dificuldade: o acesso à instalação das ferramentas foi bloqueado no ambiente isolado e os testes HTTP ficaram parados nele; a instalação e os testes foram executados fora do isolamento. O serviço Docker não estava em execução, impedindo validar a imagem localmente.
+Alteração: adicionados testes HTTP, dependências de desenvolvimento e comandos no README; o workflow passou a usar essas dependências. Ajustadas formatação e organização de imports. Nenhuma alteração manual informada pelo usuário.
+
+Interações 4 e 5 — Validação manual do Docker
+Prompt: "pode deixar que eu faço essa parte de executar o docker, eu faço isso dentro do terminal da pasta mesmo? `docker build -t api-estatistica:ci .`"
+Resultado: a IA orientou executar o build na raiz do projeto e iniciar o container com `docker run --rm -p 8000:8000 api-estatistica:ci`. O usuário executou os comandos; o log mostrou que o Uvicorn iniciou e concluiu a inicialização da aplicação.
+Problema: nenhum relatado nesta execução. A abertura de /docs no navegador ainda não foi confirmada.
+Alteração manual: build e execução local do container pelo usuário; nenhum arquivo do projeto foi alterado manualmente nesta etapa.
+
+Interação 6 — Conferência dos requisitos
+Prompt: "qual os próximos passos agora? subir isso ao github? Verifique o arquivo do desafio e confira se a atual esteira cumpre com os requisitos"
+Resultado: a CI contempla os gatilhos, preparação, testes e verificações exigidos; ainda falta comprová-la no GitHub. O CD e a aplicação publicada em ambiente acessível permanecem pendentes, assim como o PDF final com evidências.
+Dificuldade: a execução local não comprova o funcionamento da pipeline no GitHub; a branch atual é limpeza/historico-api.
+Alteração: apenas este registro; nenhum commit ou envio realizado.
+
+Interação 7 — Revisão antes do envio
+Prompt: "sim, podemos seguir com o 1"
+Resultado: ao comparar com a main do GitHub, a IA identificou uma pipeline já existente com CI, testes HTTP, build e início de deploy no Render. Corrige a avaliação anterior: o código do CD existe na main, mas sua configuração e execução não foram verificadas.
+Dificuldade: a branch local divergiu da main e possui outro arquivo no mesmo caminho do workflow; a integração exigirá cuidado para preservar o trabalho existente.
+Alteração: revisão e preparação do envio da branch; a integração com main não foi realizada nesta etapa.

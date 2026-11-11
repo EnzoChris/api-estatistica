@@ -10,8 +10,6 @@ from app.schema.metricas_schema import (
 )
 
 
-
-
 def to_dataframe(base_dados: MetricasInput) -> pd.DataFrame:
     return pd.DataFrame(
         {"base_um": base_dados.base_dados_um, "base_dois": base_dados.base_dados_dois}
@@ -64,4 +62,6 @@ def classificacao_cov_e_corr(
     else:
         corr_avaliacao = "estável"
 
-    return ClassificacaoOutput(cov_avaliacao=cov_avaliacao, corr_avaliacao=corr_avaliacao)
+    return ClassificacaoOutput(
+        cov_avaliacao=cov_avaliacao, corr_avaliacao=corr_avaliacao
+    )
