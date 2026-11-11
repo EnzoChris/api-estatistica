@@ -47,3 +47,33 @@ Prompt: "quero apenas o que eu falei com você nesta conversa, desconsidere os a
 Resultado: o usuário confirmou manter a CI criada nesta conversa e configurar o CD depois. A main foi integrada à branch, preservando os demais arquivos existentes.
 Dificuldade: houve conflitos no workflow, README, dependências e formatação; as versões desta conversa foram mantidas nesses arquivos.
 Alteração: conflitos resolvidos; o guia anterior foi sinalizado como histórico porque descreve outra pipeline. Após a conciliação, Ruff passou e 20 testes passaram com 100% de cobertura de linhas.
+
+Interação 9 — Verificação do Cursor Bugbot
+Prompt: "por que aparece a etapa de cursor bugbot dentro da minha esteira na pr?"
+Resultado: a descrição do PR informa que o Cursor Bugbot está configurado para revisões automáticas do repositório; ele não está definido no workflow criado nesta conversa.
+Dificuldade: a configuração de instalação e eventual obrigatoriedade da verificação não foram inspecionadas.
+Alteração: apenas este registro; nenhuma configuração do GitHub foi modificada.
+
+Interação 10 — Merge e preparação do Render
+Prompt: "pronto, posso mergear ou faremos mais commits dentro desse pr para continuar com a validação para fazer deploy? Lembrando que eu estou confirgurando o render para deployar tudo da main desse repositório, apenas não apertei ainda em deploy web service"
+Resultado: orientado validar os jobs do PR, integrar a CI e configurar o CD em outra etapa. A criação do serviço no Render inicia um primeiro deploy; o auto-deploy deve ser desativado para que o GitHub Actions controle os próximos.
+Dificuldade: não foi possível verificar os resultados dos jobs da CI pelo acesso disponível; é necessário conferi-los no GitHub. O registro local ainda não foi enviado.
+Alteração: apenas este registro; nenhuma configuração do Render foi alterada.
+
+Interação 11 — Primeiro serviço no Render
+Prompt: "mergeei a branch, apertei em criar web service, e agora?"
+Resultado: o merge do PR foi confirmado no GitHub. O usuário informou ter criado o serviço; orientado acompanhar o primeiro deploy, desativar o auto-deploy e testar a API publicada.
+Dificuldade: o estado do serviço e o resultado do primeiro deploy ainda não foram informados.
+Alteração manual: o usuário realizou o merge e iniciou a criação do Web Service no Render.
+
+Interação 12 — Primeiro deploy ativo
+Prompt: o usuário compartilhou o log de inicialização do Render, informou "Funcionou" e confirmou "Já deixei auto deploy como off".
+Resultado: o log informado mostra serviço Live e Uvicorn na porta 10000; o usuário desativou o auto-deploy. A ferramenta da IA não conseguiu acessar a URL pública para confirmar /docs.
+Dificuldade: o log mostra 404 para /, que não é uma rota definida pela aplicação; falta confirmar /docs e uma requisição ao endpoint.
+Alteração manual: usuário desativou o auto-deploy no Render.
+
+Interação 13 — Implementação do CD
+Prompt: "validei, está funcionando, e agora? quando faremos a pr configurando cd?"
+Resultado: usuário confirmou acesso à API. Preparado job que solicita o deploy no Render do commit validado, apenas em push na main após a CI.
+Dificuldade: a aceitação do hook não comprova que o deploy terminou; será necessário verificar o status Live e o commit no Render. O secret deve ser configurado pelo usuário.
+Alteração: adicionado job de deploy, com orientações no README; PR de CD preparada para revisão.
