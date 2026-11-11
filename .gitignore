@@ -7,3 +7,9 @@ build/
 dist/
 *.egg
 .env
+
+.pytest_cache/
+.ruff_cache/
+.coverage*
+coverage.xml
+test-results.xml
