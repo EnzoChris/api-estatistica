@@ -1,5 +1,7 @@
 # Guia da atividade: CI/CD
 
+> **Conteúdo histórico:** as instruções abaixo descrevem uma versão anterior da pipeline e não refletem o workflow atual. A CI atual está documentada no README; o CD será definido posteriormente.
+
 ## O que foi preparado
 
 O arquivo `.github/workflows/ci.yml` executa, a cada push em qualquer branch e em pull requests para `main`:
