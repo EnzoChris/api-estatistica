@@ -30,6 +30,14 @@ docker build -t api-estatistica .
 docker run --rm -p 8000:8000 api-estatistica
 ```
 
+## Deploy contínuo
+
+Após um push na `main`, a pipeline solicita o deploy do commit no Render somente se lint, testes e build da imagem forem aprovados. Em pull requests, o deploy não é executado.
+
+No serviço do Render, mantenha o Auto-Deploy desativado e copie o Deploy Hook em Settings. No GitHub, adicione esse endereço como secret de Actions chamado `RENDER_DEPLOY_HOOK_URL`. O hook é uma credencial e não deve ser compartilhado nem versionado.
+
+A aprovação da etapa no GitHub confirma que o Render aceitou a solicitação; verifique na página Deploys do Render se o commit correto ficou Live.
+
 ## Requisição
 
 `POST /criar-metricas-estatisticas` aceita duas listas numéricas de mesmo tamanho, com pelo menos duas observações e pelo menos dois valores distintos em cada lista. Os valores devem ser finitos. A correlação não é definida para uma série constante. Dados inválidos ou resultados que excedam a precisão numérica retornam HTTP 422.

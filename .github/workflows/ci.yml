@@ -51,3 +51,24 @@ jobs:
         uses: actions/checkout@v4
       - name: Construir imagem
         run: docker build -t api-estatistica:ci .
+
+  deploy:
+    name: Solicitar deploy no Render
+    needs: [qualidade, testes, docker]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar commit validado para o Render
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          DEPLOY_COMMIT: ${{ github.sha }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "Configure o secret RENDER_DEPLOY_HOOK_URL no GitHub."
+            exit 1
+          fi
+          curl --fail --silent --show-error --output /dev/null \
+            --connect-timeout 10 --max-time 30 --request POST \
+            "${RENDER_DEPLOY_HOOK_URL}&ref=${DEPLOY_COMMIT}"
+          echo "Solicitação enviada ao Render para o commit ${DEPLOY_COMMIT}."
+          echo "Confira no Render se o deploy terminou e o serviço está Live."
