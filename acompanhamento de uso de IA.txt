@@ -41,3 +41,9 @@ Prompt: "sim, podemos seguir com o 1"
 Resultado: ao comparar com a main do GitHub, a IA identificou uma pipeline já existente com CI, testes HTTP, build e início de deploy no Render. Corrige a avaliação anterior: o código do CD existe na main, mas sua configuração e execução não foram verificadas.
 Dificuldade: a branch local divergiu da main e possui outro arquivo no mesmo caminho do workflow; a integração exigirá cuidado para preservar o trabalho existente.
 Alteração: revisão e preparação do envio da branch; a integração com main não foi realizada nesta etapa.
+
+Interação 8 — Conciliação com a main
+Prompt: "quero apenas o que eu falei com você nesta conversa, desconsidere os acontecimentos antigos, vamos configurando isso nós mesmos"; confirmação: "isso mesmo, confirmo".
+Resultado: o usuário confirmou manter a CI criada nesta conversa e configurar o CD depois. A main foi integrada à branch, preservando os demais arquivos existentes.
+Dificuldade: houve conflitos no workflow, README, dependências e formatação; as versões desta conversa foram mantidas nesses arquivos.
+Alteração: conflitos resolvidos; o guia anterior foi sinalizado como histórico porque descreve outra pipeline. Após a conciliação, Ruff passou e 20 testes passaram com 100% de cobertura de linhas.
